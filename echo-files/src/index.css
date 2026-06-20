@@ -1,0 +1,224 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   ECHO FILES — Global Cyberpunk Terminal Styles
+   ============================================================ */
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body, #root {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    font-family: 'JetBrains Mono', 'Noto Sans SC', monospace;
+    background: #0A0A0F;
+    color: #E8E8F0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  ::selection {
+    background: rgba(0, 240, 255, 0.3);
+    color: #E8E8F0;
+  }
+
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111118;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #335577;
+    border-radius: 2px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #00F0FF;
+  }
+}
+
+@layer components {
+  /* ── CRT Scanline Overlay ── */
+  .crt-scanlines {
+    pointer-events: none;
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.06) 0px,
+      rgba(0, 0, 0, 0.06) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+  }
+
+  .crt-scanlines::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+  }
+
+  /* ── RGB Chromatic Aberration ── */
+  .chromatic-text {
+    text-shadow:
+      1px 0 0 rgba(255, 0, 0, 0.15),
+      -1px 0 0 rgba(0, 0, 255, 0.15);
+  }
+
+  .chromatic-heavy {
+    text-shadow:
+      3px 0 0 rgba(255, 0, 0, 0.3),
+      -3px 0 0 rgba(0, 0, 255, 0.3);
+  }
+
+  /* ── Glitch Overlay ── */
+  .glitch-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.1s ease;
+  }
+  .glitch-overlay.active {
+    opacity: 1;
+    background: linear-gradient(
+      0deg,
+      rgba(255, 45, 85, 0.03) 0%,
+      transparent 30%,
+      rgba(0, 240, 255, 0.03) 70%,
+      transparent 100%
+    );
+  }
+
+  /* ── Glassmorphism Panel ── */
+  .glass-panel {
+    background: rgba(26, 26, 36, 0.87);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 2px;
+  }
+
+  /* ── Neon Border Breath ── */
+  .neon-border {
+    border: 1px solid rgba(0, 240, 255, 0.15);
+    box-shadow:
+      0 0 10px rgba(0, 240, 255, 0.05),
+      inset 0 0 10px rgba(0, 240, 255, 0.02);
+  }
+
+  /* ── Typed Cursor ── */
+  .typed-cursor {
+    display: inline-block;
+    width: 10px;
+    height: 20px;
+    background: #00F0FF;
+    animation: blink 1s step-end infinite;
+  }
+  .typed-cursor.danger {
+    background: #FF2D55;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0; }
+  }
+
+  /* ── Strike-through for revealed words ── */
+  .word-struck {
+    text-decoration: line-through;
+    text-decoration-thickness: 2px;
+    color: #FF6B8A;
+    opacity: 0.85;
+    transition: all 0.6s ease;
+  }
+
+  /* ── Truth Reveal ── */
+  .word-revealed {
+    color: #E8E8F0;
+    font-weight: 600;
+    animation: truthFlash 0.8s ease-out;
+  }
+  @keyframes truthFlash {
+    0%   { color: #00F0FF; text-shadow: 0 0 15px rgba(0,240,255,0.8); }
+    100% { color: #E8E8F0; text-shadow: none; }
+  }
+
+  /* ── Fake Word (clickable) ── */
+  .fake-word-marker {
+    cursor: pointer;
+    color: #0AFFFF;
+    border-bottom: 1px dashed rgba(10, 255, 255, 0.3);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  .fake-word-marker:hover {
+    color: #FFB800;
+    border-bottom-color: rgba(255, 184, 0, 0.6);
+    text-shadow: 0 0 8px rgba(255, 184, 0, 0.4);
+  }
+  .fake-word-marker.questioned {
+    color: #FFB800;
+    border-bottom-style: solid;
+    border-bottom-color: rgba(255, 184, 0, 0.6);
+  }
+
+  /* ── Sanity Degradation ── */
+  .sanity-skew-1 {
+    transform: skewX(-0.5deg) rotate(-0.1deg);
+  }
+  .sanity-skew-2 {
+    transform: skewX(-1.2deg) rotate(-0.3deg);
+  }
+  .sanity-skew-3 {
+    transform: skewX(1deg) rotate(0.2deg);
+  }
+
+  .cursor-trail {
+    cursor: none;
+  }
+  .cursor-trail * {
+    cursor: none;
+  }
+
+  /* ── Screen Flash ── */
+  .screen-flash {
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    pointer-events: none;
+    background: rgba(255, 45, 85, 0.06);
+    animation: flashFade 0.3s ease-out;
+  }
+  @keyframes flashFade {
+    from { opacity: 1; }
+    to   { opacity: 0; }
+  }
+
+  /* ── Backlash restore animation ── */
+  .backlash-restore {
+    animation: restoreFlicker 0.2s ease-in-out 3;
+  }
+  @keyframes restoreFlicker {
+    0%, 100% { opacity: 1; }
+    25%      { opacity: 0.2; transform: translateX(-2px); }
+    75%      { opacity: 0.8; transform: translateX(2px); }
+  }
+}
+
+/* ── Particle Canvas Layer ── */
+.particles-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.4;
+}

@@ -1,0 +1,12 @@
+$:
+  vscode:
+    - runner:
+        cpus: 32
+        # tags: cnb:arch:amd64:gpu:L40
+      docker:
+        image: docker.cnb.cool/looc/default-dev-env:latest
+      env:
+        VIRTUAL_ENV_DISABLE_PROMPT: "1"
+      services:
+        - vscode
+        - docker

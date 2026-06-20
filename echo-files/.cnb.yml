@@ -1,0 +1,26 @@
+# CNB (cool.cn) Pipeline Configuration
+# Project: ECHO FILES — 回声档案
+# Triggered on every push to main branch
+
+$:
+  push:
+    branches:
+      include:
+        - main
+
+    # ── Build & Deploy Stage ──
+    - name: echo-files-build
+      stages:
+        - name: Install Dependencies
+          image: node:18-alpine
+          cache:
+            - path: node_modules
+          script: |
+            npm ci --prefer-offline
+
+        - name: TypeScript Check & Vite Build
+          image: node:18-alpine
+          script: |
+            npm run build
+
+        # Output: dist/ directory will be served as static site
